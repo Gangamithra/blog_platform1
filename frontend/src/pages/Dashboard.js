@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { getBlogs, deleteBlog } from "../api/api";
 import { useAuth } from "../context/AuthContext";
 import Navbar from "../components/Navbar";
+import { getImageUrl } from "../utils/imageUrl";
 import "../styles/dashboard.css";
 
 export default function Dashboard() {
@@ -109,7 +110,11 @@ export default function Dashboard() {
               <div className="post-item" key={post._id} style={{ animationDelay: `${i * 0.05}s` }}>
                 <div className="post-item-img">
                   {post.featuredImage ? (
-                    <img src={`http://localhost:5001/uploads/${post.featuredImage}`} alt={post.title} />
+                    <img
+                      src={post.featuredImage.includes("cloudinary.com") ? post.featuredImage : getImageUrl(post.featuredImage)}
+                      alt={post.title}
+                      onError={(e) => { e.target.style.display = "none"; }}
+                    />
                   ) : "📝"}
                 </div>
                 <div className="post-item-body">

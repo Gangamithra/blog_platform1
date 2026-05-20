@@ -3,7 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { getProfile, updateProfile, getBlogs } from "../api/api";
 import { useAuth } from "../context/AuthContext";
 import Navbar from "../components/Navbar";
+import { getImageUrl } from "../utils/imageUrl";
 import "../styles/profile.css";
+import { getImageUrl } from "../utils/imageUrl";
 import "../styles/dashboard.css";
 
 function initials(name) {
@@ -37,7 +39,7 @@ export default function Profile() {
       const { data: prof } = await getProfile();
       setProfile(prof);
       setForm((p) => ({ ...p, name: prof.name || "", bio: prof.bio || "" }));
-      if (prof.avatar) setAvatarPreview("http://localhost:5001/uploads/" + prof.avatar);
+      if (prof.avatar) setAvatarPreview(getImageUrl(prof.avatar));
 
       if (user?.role === "author") {
         const { data: blogsData } = await getBlogs({ limit: 100 });
@@ -242,7 +244,11 @@ export default function Profile() {
                     onClick={() => navigate("/blog/" + post.slug)}
                   >
                     {post.featuredImage ? (
-                      <img src={"http://localhost:5001/uploads/" + post.featuredImage} alt={post.title} />
+                      <img
+                        src={post.featuredImage.includes("cloudinary.com") ? post.featuredImage : getImageUrl(post.featuredImage)}
+                        alt={post.title}
+                        onError={(e) => { e.target.style.display = "none"; }}
+                      />
                     ) : (
                       <div className="profile-post-thumb-placeholder">{post.title}</div>
                     )}

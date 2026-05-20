@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { getBlogs, likeBlog } from "../api/api";
 import { useAuth } from "../context/AuthContext";
 import Navbar from "../components/Navbar";
+import { getImageUrl } from "../utils/imageUrl";
 import "../styles/feed.css";
 
 const CATEGORIES = ["All","Technology","Lifestyle","Travel","Food","Health","Business","Education","Entertainment","Sports","Other"];
@@ -187,10 +188,13 @@ export default function Home() {
                 {blog.featuredImage ? (
                   <img
                     className="card-image"
-                    src={"http://localhost:5001/uploads/" + blog.featuredImage}
+                    src={blog.featuredImage.includes("cloudinary.com")
+                      ? blog.featuredImage
+                      : getImageUrl(blog.featuredImage)}
                     alt={blog.title}
                     onClick={() => navigate("/blog/" + blog.slug)}
                     style={{ cursor: "pointer" }}
+                    onError={(e) => { e.target.style.display = "none"; }}
                   />
                 ) : (
                   <div
@@ -208,11 +212,9 @@ export default function Home() {
                     {blog.title}
                   </div>
                   <div className="card-excerpt">
-                      <div
-                         dangerouslySetInnerHTML={{
-                             __html: blog.content || "",
-                          }}
-                       />
+                    {blog.content
+                      ? blog.content.replace(/<[^>]*>/g, " ").replace(/&nbsp;/g, " ").replace(/&mdash;/g, "—").trim().slice(0, 200) + (blog.content.length > 200 ? "…" : "")
+                      : ""}
                   </div>
                   {blog.tags?.length > 0 && (
                     <div className="card-tags">
