@@ -13,7 +13,8 @@ exports.createBlog = async (req, res) => {
     }
 
     const slug = title.toLowerCase().split(" ").join("-");
-    const featuredImage = req.file ? req.file.filename : null;
+    // Cloudinary returns full URL in req.file.path
+    const featuredImage = req.file ? req.file.path : null;
 
     const blog = await Blog.create({
       title,
@@ -30,9 +31,7 @@ exports.createBlog = async (req, res) => {
       message: "Blog created successfully",
       blog: {
         ...blog._doc,
-        featuredImage: blog.featuredImage
-          ? `http://localhost:5001/uploads/${blog.featuredImage}`
-          : null,
+        featuredImage: blog.featuredImage || null,
       },
     });
   } catch (error) {

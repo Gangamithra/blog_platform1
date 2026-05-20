@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { getSingleBlog, likeBlog, addComment, deleteComment } from "../api/api";
 import { useAuth } from "../context/AuthContext";
 import Navbar from "../components/Navbar";
+import { getImageUrl } from "../utils/imageUrl";
 import "../styles/feed.css";
 
 function calcReadingTime(content) {
@@ -181,7 +182,7 @@ export default function BlogDetail() {
           {blog.featuredImage ? (
             <img
               className="detail-hero"
-              src={"http://localhost:5001/uploads/" + blog.featuredImage}
+              src={getImageUrl(blog.featuredImage)}
               alt={blog.title}
             />
           ) : (
@@ -192,10 +193,7 @@ export default function BlogDetail() {
           <div className="detail-body">
             <div className="detail-category">{blog.category}</div>
             <h1 className="detail-title">{blog.title}</h1>
-            <div
-  className="detail-text"
-  dangerouslySetInnerHTML={{ __html: blog.content }}
-/>
+            <div className="detail-text">{blog.content}</div>
 
             {blog.tags?.length > 0 && (
               <div className="detail-tags">
@@ -278,7 +276,13 @@ export default function BlogDetail() {
                     </div>
                     <div className="comment-text">{c.text}</div>
                   </div>
-                  {(c.user?._id === user?.id || c.user === user?.id) && (
+                  {/* show delete if: you wrote the comment OR you are the blog author */}
+                  {(
+                    c.user?._id === user?.id ||
+                    c.user === user?.id ||
+                    blog.author?._id === user?.id ||
+                    blog.author === user?.id
+                  ) && (
                     <button
                       className="comment-delete"
                       onClick={() => handleDeleteComment(c._id)}

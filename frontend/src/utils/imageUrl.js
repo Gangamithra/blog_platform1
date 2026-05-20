@@ -4,7 +4,8 @@ const BASE_URL = process.env.REACT_APP_API_URL
 
 export const getImageUrl = (filename) => {
   if (!filename) return null;
-  // if already a full URL, return as-is
+  // Cloudinary or any full URL — return as-is
   if (filename.startsWith("http")) return filename;
+  // local dev fallback
   return `${BASE_URL}/uploads/${filename}`;
 };
