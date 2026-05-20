@@ -5,7 +5,6 @@ import { useAuth } from "../context/AuthContext";
 import Navbar from "../components/Navbar";
 import { getImageUrl } from "../utils/imageUrl";
 import "../styles/profile.css";
-import { getImageUrl } from "../utils/imageUrl";
 import "../styles/dashboard.css";
 
 function initials(name) {
