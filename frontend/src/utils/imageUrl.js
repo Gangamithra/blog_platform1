@@ -10,3 +10,11 @@ export const getImageUrl = (filename) => {
   // local dev fallback
   return `${BASE_URL}/uploads/${filename}`;
 };
+
+// Strip HTML tags and return plain text
+export const stripHtml = (html) => {
+  if (!html) return "";
+  const div = document.createElement("div");
+  div.innerHTML = html;
+  return (div.textContent || div.innerText || "").trim();
+};

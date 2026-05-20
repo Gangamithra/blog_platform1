@@ -213,7 +213,12 @@ export default function Home() {
                   </div>
                   <div className="card-excerpt">
                     {blog.content
-                      ? blog.content.replace(/<[^>]*>/g, " ").replace(/&nbsp;/g, " ").replace(/&mdash;/g, "—").trim().slice(0, 200) + (blog.content.length > 200 ? "…" : "")
+                      ? (() => {
+                          const div = document.createElement("div");
+                          div.innerHTML = blog.content;
+                          const text = div.textContent || div.innerText || "";
+                          return text.trim().slice(0, 200) + (text.trim().length > 200 ? "…" : "");
+                        })()
                       : ""}
                   </div>
                   {blog.tags?.length > 0 && (
