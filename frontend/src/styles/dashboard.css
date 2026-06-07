@@ -178,7 +178,7 @@
   
   .status-badge.published {
     background: #e6f4ea;
-    color: #1e7e34;
+    color: #1e55bb;
   }
   
   .status-badge.draft {
@@ -248,7 +248,7 @@
   .modal-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(198, 65, 65, 0.4);
     display: flex;
     align-items: center;
     justify-content: center;
