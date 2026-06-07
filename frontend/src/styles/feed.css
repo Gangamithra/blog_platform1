@@ -127,13 +127,13 @@
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #f5a623, #e63946);
+    background: linear-gradient(135deg, #2d6f51, #40dd81);
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 13px;
     font-weight: 600;
-    color: rgb(251, 217, 217);
+    color: rgb(5, 1, 1);
     flex-shrink: 0;
   }
   
@@ -260,8 +260,8 @@
     stroke: currentColor;
     fill: none;
     stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
+    stroke-linecap: square;
+    stroke-linejoin: square;
     transition: fill 0.15s;
   }
   

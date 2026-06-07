@@ -61,7 +61,7 @@
     font-size: 12px;
     font-weight: 500;
     color: var(--text-muted);
-    text-transform: uppercase;
+    text-transform: lowercase;
     letter-spacing: 0.6px;
   }
   
@@ -178,7 +178,7 @@
   
   .status-badge.published {
     background: #e6f4ea;
-    color: #1e55bb;
+    color: #d52d07;
   }
   
   .status-badge.draft {
